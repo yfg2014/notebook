@@ -1,0 +1,20 @@
+<app>
+    <name>留言本</name>
+    <description>Pluggable Authentication Modules</description>
+
+    <author>
+        <name>wql开发</name>
+        <email>wql@shopex.cn</email>
+        <url>http://www.wql.cn</url>
+    </author>
+
+    <version>0.1</version>
+    <license>shopex license</license>
+
+	<depends>
+		<app>base</app>
+                <app>desktop</app>
+                <app>site</app>
+	</depends>
+
+</app>

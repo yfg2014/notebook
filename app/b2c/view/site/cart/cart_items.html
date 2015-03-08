@@ -1,0 +1,33 @@
+<!-- 购物车页面结构开始 -->
+<table width="100%" id="goodsbody" cellpadding="2" cellspacing="0" class="table-goods-list gridlist">
+      <col class="span-8 "></col>
+      <col class="span-2 textcenter"></col>
+      <col class="span-2"></col>
+      <col class="span-3"></col>
+      <col class="span-3"></col>
+      <{if !$checkout}><col class="span-2"></col><{/if}>
+      <thead>
+        <tr>
+          <th class="first"><{t}>商品名称<{/t}></th>
+          <th><{t}>单价<{/t}></th>
+          <th><{t}>数量<{/t}></th>
+           <th><{t}>金额小计<{/t}></th>
+          <th><{t}>积分<{/t}></th>
+          <{if !$checkout}><th><{t}>操作<{/t}></th><{/if}>
+        </tr>
+      </thead>
+      <tbody >
+	<{if $item_section}>
+	    <{foreach from=$item_section item=section}>
+	      <{include file=$section.file app=$section.app }>
+	    <{/foreach}>
+	<{/if}>
+	  </tbody>
+   </table>
+
+<{if $aCart.cart_status=='false'}>
+<div id="error_str" style="display:none;">
+    <{$aCart.cart_error_html}>
+</div>
+<{/if}>
+<!-- 购物车页面结构结束 -->

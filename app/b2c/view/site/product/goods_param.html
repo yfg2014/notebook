@@ -1,0 +1,74 @@
+  <table class="goods-param-tab">
+    <col width="15%" nowrap>
+    <col>
+    <{if $goods.brand.brand_name}>
+    <tr>
+      <th colspan="2">品牌信息</th>
+    </tr>
+    <tr>
+      <td><{t}>品牌名称<{/t}></td>
+      <td><a href="<{link app=b2c ctl='site_brand' act='index' arg0=$goods.brand.brand_id}>" class="font-blue lnk" target="_blank"><{$goods.brand.brand_name}></a></em></td>
+    </tr>
+    <{/if}>
+    <{if $goodsbndisplay eq 'true'}>
+    <tr>
+      <td><{t}>商品编号<{/t}></td>
+      <td><em><{$goods.bn}></em></td>
+    </tr>
+    <{/if}>
+    <!--tr>
+      <td><{t}>商品货号<{/t}></td>
+      <td><em id="goodsBn" updatespec="text_bn"><{assign var=apro value=$goods.product|current}><{$apro.bn}><{assign var=apro value=null}></em></td>
+    </tr-->
+    <{if $goods.unit}>
+    <tr>
+      <td><{t}>计量单位<{/t}></span></td>
+      <td><em><{$goods.unit}></em></td>
+    </tr>
+    <{/if}>
+    <{if $goods.brief}>
+    <tr>
+      <td><{t}>商品简介<{/t}></span></td>
+      <td><em><{$goods.brief}></em></td>
+    </tr>
+    <{/if}>
+    <{if $env.conf.b2c.goodsprop.display.position != 1}>
+    <tr>
+      <th colspan="2">规格信息</th>
+    </tr>
+    <{foreach from=$goods.type.props item=propord key=key}>
+    <{if $propord.show}>
+    <{assign var="pkey" value="p_{$key}"}>
+    <{assign var="pcol" value=$goods.props.$pkey.value}>
+    <{if trim($pcol) !== ''}>
+    <tr>
+      <td><{$propord.name}></td>
+      <td><{if $propord.type == 'select'}>
+        <{if $env.conf.b2c.goodsprop.display.switch == 'true'}><a href="<{selector args=array("{$goods[category][cat_id]}") value="{$goods[category][cat_id]}" filter=array('cat_id'=>array("{$goods[category][cat_id]}"),"p_{$key}"=>array($pcol))}>" class="font-blue" target="_blank"><{$propord.options.$pcol}></a><{else}><{$propord.options.$pcol}><{/if}>
+        <{else}>
+        <{$pcol}>
+        <{/if}>
+      </td>
+    </tr>
+    <{/if}>
+    <{/if}>
+    <{/foreach}>
+    <{/if}>
+  </table>
+  <{if $goods.type.setting.use_params == 1}>
+  <table class="goods-param-tab">
+     <{foreach from=$goods.params item=params_values key=params_key}>
+    <tbody>
+      <tr>
+          <th colspan="2"><{$params_key}></th>
+      </tr>
+      <{foreach from=$params_values item=item key=key}>
+      <tr>
+          <td><{$key}></td>
+          <td><em><{$item}></em></td>
+      </tr>
+      <{/foreach}>
+    </tbody>
+    <{/foreach}>
+  </table>
+  <{/if}>

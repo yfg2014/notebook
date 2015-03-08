@@ -1,0 +1,59 @@
+<{if !$is_checkout}>
+  <div id="btn-cart-del-area" class="del-cart"><a href="javascript:void(0);" class="btn-a"><i class="has-icon"> <{img src='bundle/delecate.gif' app="b2c" }></i> <span onclick="Cart.empty('<{link app=b2c ctl=site_cart act=remove}>')"><{t}>清空购物车<{/t}></span></a></div>
+
+  <!-- promotion start -->
+  <{if isset($edit_ajax_data)}>
+  <input type="hidden" id='update-ajax-num' value='<{if $update_cart_type_godos}><{$edit_ajax_data}><{else}><{$edit_ajax_data}><{/if}>' error_msg="<{$error_msg}>" />
+  <{/if}>
+
+
+  <{if $aCart.promotion.goods}>
+  <{foreach from=$aCart.promotion.goods item=promotion }>
+    <input type="hidden" class="goods_rule_id" value="<{$promotion.rule_id}>" />
+  <{/foreach}>
+  <{/if}>
+  <{if $aCart.promotion.order}>
+  <div id="cart-real-sales-promotion" class="sales-promotion fl">
+    <h4><{t}>已享受的促销优惠<{/t}></h4>
+    <ul >
+     <{foreach from=$aCart.promotion item=promotion key=key}>
+    <{if $key=='goods'}><{continue;}><{/if}>
+    <{if $key=='coupon'}><{continue;}><{/if}>
+      <{foreach from=$promotion item=item}>
+    <li class="clearfix p10">
+    <span class="promotion-name"><input type="hidden" class="order_rule_id" value="<{$item.rule_id}>" /><{$item.name}> </span>
+    <span class="promotion-inf"><{if $item.solution}><{$item.solution}><{else}><{$item.desc}><{/if}></span>
+    </li>  
+    <{/foreach}>
+    <{/foreach}>
+    </ul>
+    <!-- <table width="100%" cellpadding="3" cellspacing="0" >
+    <{foreach from=$aCart.promotion item=promotion key=key}>
+    <{if $key=='goods'}><{continue;}><{/if}>
+    <{if $key=='coupon'}><{continue;}><{/if}>
+     <{foreach from=$promotion item=item}>
+      <tr>
+        <td class="span-auto">
+          <input type="hidden" class="order_rule_id" value="<{$item.rule_id}>" />
+          <{$item.name}> 
+        </td>
+        <td class="span-auto" style="text-align:left"><{$item.solution}> </td>
+      </tr>
+     <{/foreach}>
+    <{/foreach}>
+    </table> -->
+  </div>
+  <{/if}>
+  <!-- promotion end -->
+<{/if}>
+<!--
+<{*
+<{if $solution_section}>
+<div id="cart-solution-list">
+    <{foreach from=$solution_section item=section}>
+        <{include file=$section.file app=$section.app }>
+    <{/foreach}>
+</div>
+<{/if}>
+*}>
+-->

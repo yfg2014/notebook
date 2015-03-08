@@ -1,0 +1,20 @@
+<div class="ShopCartWrap">
+<span><{t app='b2c'}>购物车中有<{/t}>
+<script>
+var _prefix_number = "";
+var _subfix_number = "</b>";
+<{if $setting.cart_show_type==1}>
+	_prefix_number = '<b class="cart-number">';	
+    document.write(typeof(Cookie)=='undefined' ? (_prefix_number + '0' + _subfix_number) : _prefix_number + (Cookie.read('S[CART_NUMBER]')?Cookie.read('S[CART_NUMBER]'):'0') + _subfix_number);
+<{else}>
+	_prefix_number = '<b class="cart-count">';
+    document.write(typeof(Cookie)=='undefined' ? (_prefix_number + '0' + _subfix_number):  _prefix_number + (Cookie.read('S[CART_COUNT]')?Cookie.read('S[CART_COUNT]'):'0') + _subfix_number);
+<{/if}>
+</script><{if $setting.cart_show_type==1}><{t app='b2c'}>件<{/t}><{else}><{t app='b2c'}>种<{/t}><{/if}><{t app='b2c'}>商品<{/t}></span>
+<a href="<{link app=b2c ctl="site_cart" act="index"}>" class="cart-container"><{t app='b2c'}>去结算<{/t}></a>
+
+<{if $setting.cart_show_total == "1"}>
+<br />
+<{t}>共计：<{/t}><span class="cart-money-total"><script>document.write(typeof(Cookie)=='undefined' ? 0 : (Cookie.read('S[CART_TOTAL_PRICE]')?Cookie.read('S[CART_TOTAL_PRICE]'):0));</script></span>
+<{/if}>
+</div>

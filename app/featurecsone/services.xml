@@ -1,0 +1,19 @@
+<services>
+
+	<service id="b2c_rpc_request_shop_filter">
+		<class>featurecsone_shopfilter</class>
+	</service>
+	
+	<service id="b2c_member_rpc_sync">
+	   <class>featurecsone_member_sync</class>
+	</service>
+	
+	<service id="api.store.user.list">
+	   <class>featurecsone_member_init</class>
+	</service>
+	
+	<service id="api.store.trades.get">
+	   <class>featurecsone_order_init</class>
+	</service>
+
+</services>

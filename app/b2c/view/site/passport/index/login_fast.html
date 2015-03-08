@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title><{t}>已注册用户，请登录<{/t}></title>
+<{lang_script src="lang.js" app="site"}>
+<{css src="framework.css" app="site" pdir="css_mini"}>
+<{css src="b2c.css" app="b2c" pdir="css_mini"}>
+<{css src="passport.css" app="b2c" pdir="css_mini"}>
+<{if defined("DEBUG_JS") && DEBUG_JS}>
+  <{script src="mootools.js" app="site"}>
+  <{script src="formplus.js" app="site"}>
+  <{script src="jstools.js" app="site"}>
+  <{script src="shoptools.js" app="b2c"}>
+<{else}>
+  <{script src="moo_min.js" app="site" pdir="js_mini"}>
+  <{script src="tools_min.js" app="site" pdir="js_mini"}>
+  <{script src="shoptools_min.js" app="b2c" pdir="js_mini"}>
+<{/if}>
+<{lang_script src="lang.js" app="b2c"}>
+<{lang_css src="lang.css" app="b2c"}>
+</head>
+<body class="mini-passport" style="margin:0;border:0;font-family: Tahoma, Arial, Helvetica, sans-serif;font-size: 12px;color: #666666;">
+  <div class="loginbox_left" style="margin:0;">
+    <div class="gray" style="padding-bottom:8px;color:gray;">如果您已是本站会员，请登录</div>
+    <{foreach from=$passports item=item}>
+    <{$item.html}>
+    <{/foreach}>
+  </div>
+
+  <{if $login_image_url.0}>
+  <div class="register-wrap" style="padding:5px;">
+    <h4><{t}>信任登录<{/t}></h4>
+
+    <div id="formthridlogin" class="form">
+      <ul class="trustlogos">
+        <{foreach from=$login_image_url item=login_image_url}>
+            <{$login_image_url}>
+        <{/foreach}>
+      </ul>
+    </div>
+  </div>
+  <{/if}>
+  <script>
+  $('loginBar').getElement('[type=submit]').store('_ajax_config', {
+    onComplete:function(rs){
+      if (!rs) return;
+        rs=JSON.decode(rs[0]);
+        if(rs.msg) return top.Message.error(rs.msg);
+        else top.location.href=rs.url;
+    }
+  });
+  </script>
+</body>
+</html>

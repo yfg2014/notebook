@@ -1,0 +1,21 @@
+<div class="FormWrap">
+  <h4><{t}>商品推荐<{/t}></h4>
+  <p style="padding:5px 0"><{t}>您可以把该商品推荐给您的好友,在下面输入您好友的E-mail地址，我们会发送邮件通知您的好友！<{/t}></p>
+  <div class="division">
+	<form method="post" action="<{link app=b2c ctl=site_product act=recooemd}>">
+	  <input type="hidden" name="goods_id" value="<{$goods.goods_id}>">
+	  <input type="hidden" name="goods_name" value="<{$goods.name}>">
+	  <table border="0" cellspacing="0" cellpadding="0" class="forform">
+		<tr>
+		  <th><{t}>您的姓名:<{/t}></th>
+		  <td><{input type='text' name="name" vtype=required size="30"}></td>
+		</tr>
+		<tr>
+		  <th><{t}>您好友的邮箱:<{/t}></th>
+		  <td><{input type='text' vtype="email&&required" name="email" size="30" value=$member.email}></td>
+		  <td style="padding-top:3px"><{button id="cart-coupon-submitBtn" rel="_request" type="submit" label=$___b2c="提交"|t:'b2c'}></td>
+		</tr>
+	  </table>
+	</form>
+  </div>
+</div>

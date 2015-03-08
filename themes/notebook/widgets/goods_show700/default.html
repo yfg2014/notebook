@@ -1,0 +1,57 @@
+<style>
+.class1{color:#ff9900;}
+.class2{color:#0099ff;}
+
+
+
+
+
+.goods700 .switchable-content{}
+.goods700 .switchable-content li{float:left;width:160px;_display:inline;margin:20px 20px 10px 0}
+.goods700 .switchable-content li.class-4,.goods700 .switchable-content li.class-8{margin-right:0;}
+.goods700 .demo-pic{width:160px;height:160px;overflow:hidden;}
+.goods700 .demo-pic a{width:160px;height:160px;display:table-cell;vertical-align:middle;}
+.goods700 .demo-pic a img{width:160px;}
+.goods700 h5{height:26px;line-height:26px;border-bottom:2px solid #373737;}
+.goods700 .demo-pic a:hover img{border-color:#990000}
+.goods700 h6 a{height:34px;line-height:18px;font-weight:100;color:#888888;margin-bottom:3px;display:block}
+.goods700 li span{font-family:Tahoma;color:#888888}
+.goods700 li i{color:#ed1c24;font-family:Verdana;font-weight:bolder;}
+.goods700 li i.mktprice{color:#ececec;text-decoration:line-through;}
+</style>
+
+
+
+<div class="goods700">
+				<h5><{$setting.title}></h5>
+				<ul class="switchable-content clearfix">
+						<{assign var="do" value='1'}>
+						<{foreach from=$data.goodsdata.goodsRows item=goodsdemo key=key}>
+								<li class="class-<{$do++}>">
+										<div class="demo-pic">
+												<a target="_blank" href="<{$goodsdemo.goodsLink}>">
+													<{if $data.info[$goodsdemo.goodsId].pic}>
+														<img src="<{$data.info[$goodsdemo.goodsId].pic}>" alt="<{if $data.info[$goodsdemo.goodsId].nice}><{$data.info[$goodsdemo.goodsId].nice}><{else}><{$goodsdemo.goodsName}><{/if}>" />
+													<{else}>
+														<img src="<{$goodsdemo.goodsPicM}>" alt="<{if $data.info[$goodsdemo.goodsId].nice}><{$data.info[$goodsdemo.goodsId].nice}><{else}><{$goodsdemo.goodsName}><{/if}>"  />
+													<{/if}>
+												</a>
+										</div>
+										<h6>
+												<a target="_blank" href="<{$goodsdemo.goodsLink}>">
+													<{if $data.info[$goodsdemo.goodsId].nice}>
+														<{$data.info[$goodsdemo.goodsId].nice}>
+													<{else}>
+														<{$goodsdemo.goodsName}>
+													<{/if}>
+												</a>
+										</h6>
+										<span>
+											<{$setting.price_show}>：<i>
+											<{$goodsdemo.goodsSalePrice|cur}></i>
+											<i class="mktprice"><{$goodsdemo.goodsMarketPrice|cur}></i>
+										</span>
+								</li>
+						<{/foreach}>
+				</ul>
+</div>

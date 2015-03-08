@@ -1,0 +1,9 @@
+<div>
+  <{if $data.iflogin==true}>
+  欢迎你，<{$data.username}>！
+  <a href="<{link app='notebook' ctl='site_passport' act='logout' }>">退出</a>
+  <{else}>
+  你好！
+  <a href="<{link app='notebook' ctl='site_passport' act='index' }>">登录</a>
+  <{/if}>
+</div>

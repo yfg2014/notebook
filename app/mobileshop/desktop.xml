@@ -1,0 +1,11 @@
+<desktop>
+    <workground name="无线商城管理" id="mobileshop_admin_mobileshop" controller="admin_mobileshop" action="index"  order="90">
+        <menugroup name="无线商城">
+            <menu controller="admin_mobileshop" action="index" permission="mobileshop_setting" display="true" order="90">无线商城配置</menu>
+            <menu controller="admin_mobileshop" action="seturl" permission="mobileshop_setting" display="true" order="90">添加无线商城</menu>
+        </menugroup>
+    </workground>
+    <permissions>
+        <permission id="mobileshop_setting" display='true'>无线商城配置</permission>
+    </permissions>
+</desktop>

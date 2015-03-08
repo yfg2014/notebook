@@ -1,0 +1,46 @@
+<{if $shippings}>
+<div>
+  <table width="100%" cellpadding="0" cellspacing="0" class="tableform">
+    <col class="span-5"></col>
+    <col class="span-auto textleft"></col>
+    <tbody>
+      <{foreach from=$shippings item="shipping" key="key" name="shippings"}>
+      <tr <{if $smarty.foreach.shippings.last}>class="last"<{/if}>>
+        <td colspan="2">
+          <label style="width:auto; margin-right:10px">
+            <input type="radio" name="delivery[shipping_id]" id='shipping_<{$shipping.dt_id}>' vtype="shppingradiorequired" value="<{$shipping.dt_id}>" class="toCheck shipping_radio_shipping_id"<{if $shipping.has_cod=='true'}> has_cod="true"<{/if}><{if $shipping_method.shipping_id == $shipping.dt_id}> checked="checked"<{/if}><{if $shipping.protect=='true'}>protect="1"<{/if}> />
+            <{$shipping.dt_name}>
+          </label>
+          <span class="shipping-information">
+          <span style="font-size:14px;" class="font-red">+ <{$shipping.money|cur_odr}></span>
+          <{if $shipping.protect=='true'}>
+          <div style="padding: 0 0 0 10px;">
+            <input id="use_protect_<{$key}>" class="chk_protect" type="checkbox" name="delivery[is_protect][<{$shipping.dt_id}>]"<{if $shipping_method.is_protect=='true' && $shipping_method.shipping_id == $shipping.dt_id}> checked="checked" protect="1"<{/if}> value="1" />
+            <{if $shipping_method.is_protect=='true' && $shipping_method.shipping_id == $shipping.dt_id}>
+            <script>
+              if ($('shipping')&&$('use_protect_<{$key}>'))
+              {
+                $('shipping').store('tmp_protect',$('shipping_<{$shipping.dt_id}>'));
+              }
+            </script>
+            <{/if}>
+            <label for="use_protect_<{$key}>"><{t}>保价费率<{/t}></label>
+            <{t}>(商品价格的<{/t}><{$shipping.protect_rate*100}>% ，<{t}>不足<{/t}><{$shipping.minprice|cur_odr}><{t}>按<{/t}><{$shipping.minprice|cur_odr}><{t}>计算<{/t}>)。</div>
+          <{/if}>
+          <{$shipping.extends_detail}>
+          <{$shipping.detail}>
+        </td>
+      </tr>
+      <{/foreach}>
+    </tbody>
+  </table>
+  <script>
+    (function(){
+      var _input = $('shipping').getElement('input[name^=delivery[shipping_id]]:checked');
+      if (_input == null) $('shipping').getElement('input[name^=delivery[shipping_id]]').checked = true;
+    })();
+  </script>
+</div>
+<{else}>
+<div class='notice'><{t}>不支持您当前所在地区的物流配送，请直接与我们联系<{/t}></div>
+<{/if}>

@@ -1,0 +1,147 @@
+<div class="member-main">
+<form id="f_order_pay" target="_blank" action="<{$form_action}>" method="post">
+<input type="hidden" name="payment[order_id]" value="<{$order.order_id}>" />
+<input type="hidden" name="payment[money]" value="<{$order.total_amount}>" id="hidden_money"/>
+<input type="hidden" name="payment[currency]" value="<{$order.currency}>" />
+<input type="hidden" name="payment[cur_money]" value="<{$order.cur_amount}>" id="hidden_cur_money"/>
+<input type="hidden" name="payment[cur_rate]" value="<{$order.cur_rate}>" />
+<input type="hidden" name="payment[cur_def]" value="<{$order.cur_def}>" />
+<input type="hidden" name="payment[pay_app_id]" value="<{$order.payinfo.pay_app_id}>" />
+<input type="hidden" name="payment[cost_payment]" value="<{$order.payinfo.cost_payment}>" />
+<input type="hidden" name="payment[cur_amount]" value="<{$order.cur_amount}>" />
+<input type="hidden" name="payment[memo]" value="<{$order.memo}>" />
+<!--<input type="hidden" name="payment[return_url]" value="<{$return_url}>" />-->
+
+<!--<div class="success clearfix pushdown-2">
+   <h3><{t}>恭喜！您的订单已经提交！<{/t}></h3>
+
+</div>-->
+
+<h3><{t}>订单信息<{/t}></h3>
+
+  <div class='p15 border-all' >
+      <p class="lh25"><{t}>订单编号：<{/t}><strong class='font14px'><{$order.order_id}></strong>&nbsp;&nbsp;[ <a href="<{link app=b2c ctl=site_member act=orderdetail arg0=$order.order_id}>" ><{t}>查看订单详细信息<{/t}>&raquo;</a> ]</p>
+     <p class="lh25"><{t}>订单金额：<{/t}><strong class="hueorange font-red font16px" id="span_amount"><{$order.cur_amount|cur_odr:$order.currency:false:true}></strong></p>
+  </div>
+
+<h3><{t}>订单支付<{/t}></h3>
+
+
+<div class='p15 border-all'>
+<div class=' p5 fontbold'>
+<{if $order.cur_amount > 0}>
+  <{if !$order.selecttype}>
+	<{t}>您选择了：<{/t}><strong class="hueorange font-red font12px"><{$order.payinfo.pay_app_id|pay_name}></strong>
+	 <{if $order.payinfo.pay_app_id != '-1'}><a href='<{link app=b2c ctl="site_member" act="orderPayments" arg0=$order.order_id arg1='true'}>' ><{t}>[ 选择其他支付方式 ]<{/t}></a><{/if}>
+  <{else}>
+	 <{t}>请选择支付方式:<{/t}>
+ <{/if}>
+</div>
+	<{if $order.selecttype}>
+    <div class='select-paymethod' id="_normal_payment">
+        <{if $payments}>
+
+                       <{foreach from=$payments item=item key=key}>
+                <p class="p3">
+                        <label><input type="radio" onclick="Order.paymentChange(this)" formatmoney="<{$order.cur_def}><{$item.cur_money}>" curmoney="<{$item.cur_money}>" moneyamount="<{$order.total_amount}>"<{if $order.payinfo.pay_app_id == $item.app_id}> checked="checked"<{/if}> value="<{$item.app_id}>" paytype="<{$item.app_id}>" name="payment[pay_app_id]" class="x-payMethod" style="cursor: pointer;"><{$item.app_name}></label>
+
+                    <span class="selected"><{$item.app_des}></span>
+                </p>
+            <{/foreach}>
+
+        <{/if}>
+    </div>
+
+	<{else}>
+		<input type="hidden" name="payment[pay_app_id]" value="<{$order.payinfo.pay_app_id}>" />
+		<{if $extendInfo}>
+		<div class='division paymethodextendInfo'>
+			<{foreach from=$extendInfo item=item key=key}>
+			<{if $item.type=='select'}>
+				<select name=<{$key}>>
+					<{foreach from=$item.value item=vitem key=vkey}>
+						<option value="<{$vitem.value}>" <{if $vitem.checked}>selected<{/if}>><{$vitem.name}></option>
+					<{/foreach}>
+				</select>
+			<{else}>
+				<{foreach  from=$item.value item=vitem key=vkey}>
+					<{if $item.type=='radio'}>
+						<input <{$vitem.checked}> type='radio' name=<{$key}> value=<{$vitem.value}>><{if $vitem.imgname}><{$vitem.imgname}><{else}><{$vitem.name}><{/if}></if>
+					<{else if $item.type=='checkbox'}>
+						<input <{$vitem.checked}> type='checkbox' name="<{$key}>[]" value=<{$vitem.value}>><{if $vitem.imgname}><{$vitem.imgname}><{else}><{$vitem.name}><{/if}></if>
+					<{/if}>
+				<{/foreach}>
+			<{/if}>
+			<{/foreach}>
+		</div>
+		<{/if}>
+	<{/if}>
+<{else}>
+	<{t}>订单不需要再支付,请等待我们处理<{/t}>
+<{/if}>
+
+</div>
+
+<{if $order.payinfo.pay_app_id != '-1' && $order.cur_amount > 0}>
+<div class="textcenter p10">
+  <{if $order.payinfo.pay_app_id!="offline"}>
+  <{button type="submit" class="order-btn btn-has-icon" label=$___b2c="立刻支付"|t:'b2c' icon="set-arrow.gif"}>
+  <{else}>
+  <{button type="submit" class="order-btn" label=$___b2c="确定"|t:'b2c' rel="_request"}>
+  <{/if}>
+</div>
+<{/if}>
+
+
+</form>
+</div>
+
+<script>
+        void function(){
+        var form= $('f_order_pay');
+            Order ={
+
+                paymentChange:function(target){
+                         if(!target)return;
+                         target = $(target);
+                     var money  = target.get('moneyamount');
+                     var fmoney = target.get('formatmoney');
+                     var paytype= target.get('paytype');
+					 var cur_money = target.get('curmoney');
+
+                     $('hidden_money').set('value',money);
+                     $('hidden_cur_money').set('value',cur_money);
+                     $('span_amount').set('text',fmoney);
+
+					 var btn_odr = form.getElement('button[type=submit]');
+
+                     btn_odr.getElement('span span').innerHTML = paytype!='offline'?'<{t}>支&nbsp;付<{/t}><i class="btn-icon"> <img src="<{$res_url}>/bundle/set-arrow.gif" /></i>':'<{t}>确定<{/t}>';
+
+					 if (paytype!='offline'){
+						btn_odr.set('class', 'btn order-btn btn-has-icon');
+					 }else{
+						btn_odr.set('class', 'btn order-btn');
+
+					 }
+                     //form.getElement('button[type=submit]')[(paytype=='offline'?'addClass':'removeClass')]('btn-pay-ok');
+                     /* $$('#_normal_payment th .ExtendCon input[type=radio]').fireEvent('checkedchange');*/
+                }
+
+            };
+
+            if($('f_order_pay').getElement('.select-paymethod')){
+                Order.paymentChange($('f_order_pay').getElement('.select-paymethod input[checked]'));
+
+                if(form&&form.getElement('button[type=submit]')){
+                    form.getElement('button[type=submit]').addEvent('click',function(e){
+
+                        if(!$('f_order_pay').getElement('.select-paymethod input[checked]')){
+                        Message.error('<{t}>请选择支付方式<{/t}>');
+                        return e.stop();
+                        }
+
+                    });
+                }
+            }
+        }();
+</script>

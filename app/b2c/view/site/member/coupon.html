@@ -1,0 +1,47 @@
+<!-- right-->
+<div class="member-main">
+<div>
+
+<div class="title"><{t}>我的优惠券<{/t}></div>
+
+<table width="100%" cellpadding="3" cellspacing="0" class="gridlist border-all">
+    <col class="span-2 "></col>
+    <col></col>
+    <col class="span-6"></col>
+    <col class="span-2"></col>
+<thead>
+<tr>
+  <th class="first"><{t}>优惠券号码<{/t}></th>
+  <th><{t}>名称<{/t}></th>
+  <th><{t}>有效期<{/t}></th>
+  <th><{t}>状态<{/t}></th>
+<!--  <th><{t}>限用商品<{/t}></th>-->
+</tr>
+</thead>
+<tbody><{if count($coupons)>0}>
+<{foreach from=$coupons item=item}>
+<tr>
+  <td><{$item.memc_code}></td>
+  <td class="textcenter font-black"><{$item.coupons_info.cpns_name}><br />
+</td>
+
+  <td><{$item.time.from_time|cdate:SDATE_STIME}> ~ <{$item.time.to_time|cdate:SDATE_STIME}></td>
+  <td align="center" ><span class="green"><!--不可用状态时候样式应用为"gray"--><{$item.memc_status}></span></td>
+</tr>
+<!--<tr>
+  <td class=" textleft"><span style="color:#666;"><{$item.pmt_describe}></span></td>
+</tr>-->
+<{/foreach}>
+<{else}>
+<tr>
+<td height="60" colspan="6">
+  <{t}>尚无任何优惠券<{/t}></td>
+</tr>
+<{/if}>
+</tbody>
+</table>
+<{pagers data=$pager}>
+
+</div>
+</div>
+<!-- right-->

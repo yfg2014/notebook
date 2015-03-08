@@ -1,0 +1,18 @@
+<app>
+    <name>无线商城</name>
+    <description>提供无线商城绑定</description>
+
+    <author>
+        <name>shopex开发团队</name>
+        <email>dev@shopex.cn</email>
+        <url>http://www.shopex.cn</url>
+    </author>
+
+    <version>0.1</version>
+    <license>shopex license</license>
+
+    <depends>
+        <app>b2c</app>
+    </depends>
+
+</app>

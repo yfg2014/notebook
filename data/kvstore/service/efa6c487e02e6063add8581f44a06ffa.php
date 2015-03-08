@@ -1,0 +1,1 @@
+<?php exit(); ?>a:3:{s:5:"value";a:1:{s:4:"list";a:2:{s:26:"groupactivity_order_notify";s:26:"groupactivity_order_notify";s:25:"b2c_api_rpc_notify_common";s:25:"b2c_api_rpc_notify_common";}}s:3:"ttl";i:0;s:8:"dateline";i:1376705648;}

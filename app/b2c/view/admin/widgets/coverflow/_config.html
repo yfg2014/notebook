@@ -1,0 +1,21 @@
+<div class="tableform widgetconfig">
+<h4><{t app='b2c'}>选择范围<{/t}></h4>
+<{input type="goodsfilter" app=b2c name="filter" from=$setting.filter}>
+<h4><{t app='b2c'}>样式设置<{/t}></h4>
+<div class="division">
+<table>
+<tr>
+  <th><{t app='b2c'}>背景颜色<{/t}></th>
+  <td><{input type="color" name="color1" value=$setting.color1}></td>
+</tr>
+<tr>
+  <th><{t app='b2c'}>文字颜色<{/t}></th>
+  <td><{input type="color" name="color2" value=$setting.color2}></td>
+</tr>
+<tr>
+  <th><{t app='b2c'}>高度<{/t}></th>
+  <td><{input type="number" name="height" value=$setting.height default=200}></td>
+</tr>
+</table>
+</div>
+</div>

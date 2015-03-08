@@ -1,0 +1,81 @@
+ <{if $comment.list.discuss}>
+  <{foreach from=$comment.list.discuss item=comlist name=discusslist}>
+  <dl>
+    <dt class="bcolor-ef">
+	<{if $point_status == 'on'}>
+      <div <{if $comlist.goods_point}>class="star-div" <{else}>class="star-no"<{/if}> style="float:left; padding-top:8px">
+        <ul>
+          <li class="star<{$comlist.goods_point}>"></li>
+        </ul>
+      </div>
+	  <{/if}>
+      <div class="flt "><span class="font-blue"><{if $comlist.addon.hidden_name =='YES' && $comlist.author_id!=0}>匿名<{else}><{$comlist.author}><{/if}> </span>&nbsp;<span ><{if $base_setting.display_lv == 'on'}><{if $comlist.member_lv_name}>(<{$comlist.member_lv_name}>)<{/if}><{/if}></span></div>
+      <div class="floatright" style="color:#999"><{$comlist.time|cdate:'SDATE_STIME'}></div>
+    </dt>
+    <dd ><{$comlist.comment|nl2br}></dd>
+   
+    <dd style="padding:0">
+    	 <{if $base_setting.switch_reply == 'on'}>
+	<div class="relay-wrap"><div class="repaybtn clearfix"><a class="repay-a btn-a"><span id="<{$comlist.comment_id}>" class="repay_span comment-btn">回 复</span></a><!--当点击下来框后此回复按钮变灰,class调用"no-cursor"--></div></div>
+     <{/if}> 
+	 <!-- 添加回复 begin-->
+	  <{if $comlist.items}>
+      <div class="commentReply relay-wrap"> 
+	   <span class="left-repay"><em class="font-orange"><{$comlist.items|count}></em> 回复</span>
+	   	  <div class="relay-box">
+	   	  	<{foreach from=$comlist.items item=items key="key"}>
+	  <div class="arrow"></div>
+	  <div class="lt"></div><div class="rt"></div><div class="lb"></div><div class="rb"></div>
+        <dl <{if $key+1 != count($comlist.items)}>class="bb"<{/if}>>
+          <p class="repayleft"><{$items.comment|nl2br}></p>
+          <p class="repayright"><span <{if $items.author === '管理员'}>class="colorRed span-2 textright"<{else}>class="font-blue span-2 textright"<{/if}>><{if $items.addon.hidden_name =='YES' && ($items.author_id !=0 || $items.author_id !=1)}>匿名<{else}><{$items.author}><{/if}></span> / <{$key+1}> <span class="font-gray">楼</span></p>
+          <dd class="textright color999"><{$items.time|cdate:'SDATE_STIME'}></dd>
+        </dl>
+        <{/foreach}></div> </div><{/if}>
+      <!-- 添加回复 end-->
+    </dd>
+   
+  </dl>
+  <{/foreach}>
+  <div class="page-discuss" >
+    <{if $comment.discusstotalpage>1}>
+  <div class="discusspager">
+   <div class="discuss-pagernum">显示<span><{$comment.page.start}></span>-<span><{$comment.page.end}></span>条 <a href="javascript:;" class="discussfirst discusspage">首页</a> <a href="javascript:;" class="discusspage discussfront">上一页</a><a href="javascript:;" class="discusspage discussfront"><<</a>
+<{foreach from=$comment.discussPage item="discussPage"}>
+	<a <{if $comment.discusscurrent == $discussPage+1}>class="current discusspage"<{else}>class="discusspage"<{/if}> href="javascript:;" value='<{$discussPage+1}>' ><{$discussPage+1}></a>
+<{/foreach}>
+   	 <a href="javascript:;" class="discusspage discussnext">下一页</a><a href="javascript:;" class="discusspage discussnext">>></a> <a href="javascript:;" class="discusspage discusslast">末页</a></div>
+ </div>
+ <{/if}>
+ </div>
+<script>
+
+$$('#discuss_content .discusspage').removeEvents('click').addEvent('click',function(){
+	if(this.hasClass('current')) return ;
+	var nextpage = this.get('text');
+	if(this.hasClass('discussnext')){
+		nextpage = parseInt(<{$comment.discusscurrent}>,10)+1;
+		if(nextpage<parseInt(<{$comment.discusstotalpage}>,10)) return;
+	}
+	if(this.hasClass('discussfront')){
+		nextpage = parseInt('<{$comment.discusscurrent}>',10)-1;
+		if(nextpage<1) return;
+	}
+	if(this.hasClass('discussfirst')){
+		nextpage = 1;
+		if(parseInt('<{$comment.discusscurrent}>',10) == 1) return;
+	}
+	if(this.hasClass('discusslast')){
+		nextpage = parseInt('<{$comment.discusstotalpage}>',10);
+		if(parseInt('<{$comment.discusscurrent}>',10) == nextpage) return;
+	}
+	new Request.HTML({
+		  url:'<{link app="b2c" ctl="site_comment" act="ajax_discuss"}>',
+		  update:$('discuss_content'),method:'post',
+		  data:'goods_id=<{$goods.goods_id}>&page='+nextpage
+	  }).send();
+});
+</script>
+<{else}>
+<{$comment.null_notice.discuss}>
+<{/if}>

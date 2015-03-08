@@ -1,0 +1,68 @@
+<div class="member-main">
+    <div class="note clearfix">
+        <h3><{$return_item.title}></h3>
+        <div class="clearfix">
+            <div class="span-auto colborder pl10"><{t}>订单编号：<{/t}><span class="font14px fontbold font-orange"><{$return_item.order_id}></span></div>
+            <div class="span-auto colborder"><{t}>订单状态：<{/t}>
+                <span class="font14px font-orange fontbold">
+                    <{$return_item.status}>
+            </span></div>
+            <div class="span-auto last"><{t}>退货时间：<{/t}><span class="font-orange "><{$return_item.add_time|cdate:'FDATE_FTIME'}></span></div></div>
+        <{if $return_item.comment }>
+        <{foreach from=$return_item.comment item="comment_item" name=comment}>
+        <div class="division mt5 clearfix">
+            <div class="border-bottom fontbold p2 clearfix textright">
+                <span class="flt"><{t}>店主反馈<{/t}></span><span class="font12px font-gray fontnormal "><{$comment_item.time|cdate:'FDATE_FTIME'}></span></div>
+            <p class="p2"><{$comment_item.content}></p>
+        </div>
+        <{/foreach}>
+        <{/if}>
+    </div>
+
+
+    <h4><{t}>需要售后服务的商品<{/t}></h4>
+    <table cellspacing="0" cellpadding="3" width="100%" class="gridlist border-all">
+        <col class="span-4"></col>
+        <col class="span-auto"></col>
+        <col class="span-4"></col>
+        <thead>
+            <tr>
+                <th class="first"><{t}>货号<{/t}></th>
+                <th><{t}>商品名称<{/t}></th>
+                <th><{t}>退货数量<{/t}></th>
+            </tr>
+        </thead>
+        <tbody>
+            <{if $return_item.product_data }>
+            <{foreach from=$return_item.product_data item="product_item" name=product_data}>
+            <tr>
+                <td class="textcenter"><{$product_item.bn}></td>
+                <td class="textcenter"><{$product_item.name}></td>
+                <td class="textcenter"><{$product_item.num}></td>
+            </tr>
+            <{/foreach}>
+            <{/if}>
+        </tbody>
+    </table>
+
+    <{if $return_item.image_file}>
+    <h4><{t}>关于退货附件<{/t}></h4>
+    <div class="thumbnailPic clearfix division">
+        <a class="margin10" href="javascript:file_download()"><{t}>请点击下载该附件<{/t}></a>
+    </div>
+    <{/if}>
+
+    <{if $return_item.content}>
+    <h4><{t}>详细说明<{/t}></h4>
+    <div class="division">
+        <{$return_item.content}>
+    </div>
+    <{/if}>
+</div>
+<script>
+    function file_download(){
+        var ifm=new IFrame({src:'<{link app=aftersales ctl=site_member act=file_download arg0=$return_id }>'});
+        ifm.inject(document.body);
+    }
+</script>
+

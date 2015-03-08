@@ -1,0 +1,61 @@
+<!-- 积分抵扣 -->
+<div class="point_discount point_disbox" style="border:1px solid #ddd; border-top:none; overflow:hidden;padding:10px; margin-top:-1px">
+	<a href="javascript:void(0);" class="siteparttitle-blue coupon-icon" onclick="show_add_coupon(this,'pointprofessional-order-checkout-dis');" ><{t}>积分抵扣<{/t}></a>
+	<div style="clear:both; margin:5px 0">
+		<div id="pointprofessional-order-checkout-dis" style="padding:20px;display:none;">
+			<div class="discount-body">
+				<label><{t}>输入抵扣积分数：<{/t}></label>
+			</div>
+			<div class="discount-area">
+            <input type="text" id="b2c-dis-point" maxlength="10" vtype="unsignedint" name="payment[dis_point]" value="" />
+            <{t}>花费<{/t}><label class="price1" id="pointprofessional-order-checkout-cost-point">0</label><{t}>积分，抵扣<{/t}><label class="price1" id="pointprofessional-order-checkout-dis-amount">0</label><{t}>元现金<{/t}><br/>
+            <ul id="pointprofessional-order-checkout-total-exchange">
+				<li><{t}><strong>1</strong>积分<{/t}>=<strong><{$discount_rate|cur_odr}></strong><input type="hidden" value="<{$discount_rate}>" />&nbsp;&nbsp;&nbsp;<{t}>最多抵扣金额：<{/t}><span id="b2c-order-checkout-total-usage-money"><{$max_discount_value|cur_odr}></span></li>
+				<li><{t}>当前可用积分：<{/t}>&nbsp;<strong><{$real_usage_point}></strong></li>
+				<li><{t}>当前抵扣金额：<{/t}><strong><span id="b2c-order-dis-max-point"><{0|cur_odr}></strong></span></li>
+			</ul>
+			</div>
+            <div class="clear"></div>
+		</div>
+	</div>
+</div>
+<script>
+(function(){
+	// 实时计算积分抵扣
+	if ($('b2c-dis-point'))
+		$('b2c-dis-point').addEvent('change', function(el){
+			var _point = 0;
+			var _target_value = $(el.target).value;
+			if (isNaN(_target_value) || /^\s+$/.test(_target_value)){
+				MessageBox.error('<{t}>积分要输入数字<{/t}>');
+				return;
+			}
+			if ( /[^\d]/.test(_target_value) ||  _target_value <= 0){
+				MessageBox.error('<{t}>请录入正整数<{/t}>');
+				return;
+			}
+			if (_target_value != '')
+				_point = $(el.target).value.toInt();
+			$('pointprofessional-order-checkout-cost-point').innerHTML = _point;
+			var _data = [$('pointprofessional-order-checkout-total-exchange').getElement('input[type="hidden"]').value.toFloat(),_point];
+            var _hash_data = {};
+			_data.each(function(item,index){
+				_hash_data[index]=item;
+			});
+			_data = JSON.encode(_hash_data);
+			new Request({
+				url:'<{link app=b2c ctl="site_tools" act="count_digist"}>',
+				method:'post',
+				data:"data="+_data+'&_method=number_multiple',
+				onComplete:function(res){
+					$('pointprofessional-order-checkout-dis-amount').innerHTML = res;
+					Order.updateTotal();
+				}
+			}).send();
+			
+			return el;
+		}).addEvent('keydown',function(e){
+			if (e.code == 13) e.stop();
+		});
+})();	
+</script>

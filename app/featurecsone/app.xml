@@ -1,0 +1,18 @@
+<app>
+    <name></name>
+    <description>套件-CSONE连通</description>
+
+    <author>
+        <name>mabaineng</name>
+        <email>mabaineng@shopex.cn</email>
+        <url></url>
+    </author>
+
+    <version>0.1</version>
+    <license></license>
+
+	<depends>
+		<app>b2c</app>
+	</depends>
+
+</app>

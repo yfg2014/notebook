@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<app>
+    <name>留言本扩展app</name>
+    <description>点一下就弹框...</description>
+    <author>
+        <name>somebody</name>
+        <email>somebody@example.com</email>
+        <url>http://www.example.com</url>
+    </author>
+    <depends>
+        <app>notebook</app>
+    </depends>
+</app>

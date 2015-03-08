@@ -1,0 +1,12 @@
+<form action="<{link app=b2c ctl=site_search act=result }>" method="post" class="SearchBar  searchBar_<{$widget_id}>" >
+<div class="search_label">
+     <input type="text" name="name[]" value="<{$data.search_key}>" autocompleter="associate_autocomplete_goods:name,goods_id" ac_options="{}" class="inputstyle keywords"  />
+     <input type="submit" value="<{t app='b2c'}>搜索<{/t}>" class="btn_search" onfocus='this.blur();'/>
+</div>
+
+</form>
+
+<span><{$setting.hotkey}>:</span>
+<{foreach from=$data.search item=toplink key=top_key}>
+	<a href="<{$toplink.top_link_url}>"><{$toplink.top_link_title}></a>
+<{/foreach}>

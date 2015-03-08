@@ -1,0 +1,36 @@
+<div class="clearfix">
+  <!-- 订单总计 -->
+<div class="frt cart-pricelist">
+  <ul class="clearfix">
+      <li><label><{t}>商品金额：<{/t}></label><span id="cart-subtotal" class="price-normal"><{$aCart.subtotal_prefilter_after|cur_odr}></span> </li>
+      <{if $aCart.discount_amount_order > 0}><li><label><{t}>优惠金额 ：<{/t}></label><span id="cart-promotion_discount_price">-<{$aCart.discount_amount_order|cur_odr}></span></li><{/if}>
+      <li><label><{t}>总金额：<{/t}></label><span id="cart-promotion-subtotal" class="totalprice price1"><{$aCart.promotion_subtotal|cur_odr}></span>
+  </ul>
+</div>
+  <!-- end -->
+
+  <!-- 订单结算按钮 -->
+  <div id="cart-return-btn" class="return-cart clearfix">
+    <{button type="submit" class="order-btn btn-has-icon frt" tyle="margin-top:10px" label=$___b2c="下单结算"|t:'b2c' icon="set-arrow.gif"}>
+    <a href="<{$go_back_link}>" class="btn-a" style="margin-top:13px;margin-right:8px"> <i class="has-icon"> <img src='<{$res_url}>/bundle/contin-shop_icon.gif' /></i><span><{t}>继续购物<{/t}></span></a>
+</div>
+  <!-- end -->
+
+  <!-- 马上要生效，但是没有生效的优惠规则 -->
+<{if $unuse_rule && !$checkout}>
+  <div id="cart-will-get-sales-promotion" class="sales-promotion clearfix">
+  <h4><{t}>赶快行动得促销优惠<{/t}></h4>
+  <table width="100%" cellpadding="3" cellspacing="0" >
+    <{foreach from=$unuse_rule item=item}>
+    <tr>
+      <td class="span-2 "><{$item.name}></td>
+      <td class="span-6" style="text-align:left"><{$item.desc}> </td>
+      <td class="span-6" style="text-align:left"><{$item.solution}></td>
+    </tr>
+    <{/foreach}>
+  </table>
+</div>
+<{/if}>
+  <!-- end -->
+
+</div>

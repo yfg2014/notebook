@@ -1,0 +1,66 @@
+<form action="<{$callback}>" method="post" id="loginBar">
+  <div class="loginbox" <{if $mini_passport}>style="margin-bottom:0;padding-left:5px;padding-right:5px;"<{/if}>>
+    <ul>
+      <li>
+      <label class="login-k"><i>*</i><{t}>用户名：<{/t}></label>
+      <div class="login-v"><{input name="uname" vtype="required" class="inputstyle" id="uname" tabindex="1" value="{$loginName}"}>&nbsp;&nbsp;<a href="<{$singup_url}>"><{t}>立即注册<{/t}></a></div>
+      </li>
+      <li>
+      <label class="login-k"><i>*</i><{t}>密码：<{/t}></label>
+      <div class="login-v"><{input name="password" type="password" class="inputstyle" vtype="required" id="password" tabindex="2"}>&nbsp;&nbsp;<a href="<{$lost_url}>" <{if $mini_passport==1}>target="_top"<{/if}>><{t}>忘记密码<{/t}></a></div>
+      </li>
+      <{if $show_varycode}>
+      <li>
+      <label class="login-k"><i>*</i><{t}>验证码：<{/t}></label>
+      <div class="login-v"><{input  vtype="required&&number" size="4" maxlength="4" name="verifycode" id="iptlogin"  tabindex="3"}> <span class='verifyCodebox' style="display:none"><img align="absmiddle" id="membervocde" src="<{link app="b2c" ctl="site_passport" act="gen_vcode"}>" /> <a href="javascript:changeimg('membervocde')"><{t}>看不清楚?换个图片<{/t}></a></span></div>
+      </li>
+      <{/if}>
+      <li>
+      <label class="login-k"></label>
+      <div class="login-v">
+        <{button class="btn-login common-btn" type="submit" label=$__b2c="登录"|t:'b2c' tabindex="4" rel="_request"}>
+        <input type="hidden" name="forward" value="<{$forward}>">
+      </div>
+      </li>
+    </ul>
+    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th><i>*</i><{t}>用户名：<{/t}></th>
+        <td><{input name="uname" vtype="required" class="inputstyle" id="uname" tabindex="1" value="{$loginName}"}>&nbsp;&nbsp;<a href="<{$singup_url}>"><{t}>立即注册<{/t}></a></td>
+      </tr>
+      <tr>
+        <th><i>*</i><{t}>密码：<{/t}></th>
+        <td><{input name="password" type="password" class="inputstyle" vtype="required" id="password" tabindex="2"}>&nbsp;&nbsp;<a href="<{$lost_url}>"><{t}>忘记密码<{/t}></a></td>
+      </tr>
+      <{if $show_varycode}>
+      <tr>
+        <th><i>*</i><{t}>验证码：<{/t}></th>
+        <td><span id='verifyCodebox'><{input  vtype="required&&number" size="4" maxlength="4" name="verifycode" id="iptlogin"  tabindex="3"}>
+            <span class='verifyCode' style="display:none"><img id="membervocde" src="#" border="1" /><a href="javascript:changeimg('membervocde')">&nbsp;<{t}>看不清楚?换个图片<{/t}></a>
+            </span>
+          </span>
+        </td>
+      </tr>
+      <{/if}>
+      <tr>
+        <th></th>
+        <td><input class="actbtn btn-login" type="submit" value="<{t}>登录<{/t}>" tabindex="4" />
+          <input type="hidden" name="forward" value="<{$forward}>">
+        </td>
+      </tr>
+    </table>-->
+  </div>
+</form>
+<{if $show_varycode}>
+<script>
+  $$('#loginBar input').addEvent('focus',function(){
+    if($(this.form).retrieve('showvcode',false))return;
+    changeimg('membervocde');
+    $$('.verifyCodebox').setStyle('display','');
+    $(this.form).store('showvcode',true);
+  });
+  function changeimg(id){
+    $(id).set('src','<{link app="b2c" ctl="site_passport" act="gen_vcode"}>#'+(+new Date()));
+  }
+</script>
+<{/if}>

@@ -1,0 +1,14 @@
+<div class="content-node-list">
+    <{if $data.__shownode&&$data.node_name}>
+    <div class="content-node-list-title">
+        <{if !$data.__stripparenturl}>
+            <a href="<{$data.node_url}>" ><span><{$data.node_name}></span></a>
+        <{else}>
+            <{$data.node_name}>
+        <{/if}>
+    </div> 
+    <{/if}>
+    <ul class="content-node-list-body">
+                <{$data.__html}>
+    </ul> 
+</div>

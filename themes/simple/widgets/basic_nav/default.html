@@ -1,0 +1,65 @@
+<ul class="MenuList MenuList_<{$widgets_id}> clearfix">
+<{foreach from=$data item=item key=key name=wgtmenu}>
+  <{if $setting.max_leng && $key>$setting.max_leng}>
+    <{if $item.custom_url neq ''}>
+    <div><a href="<{$item.custom_url}>" <{if $item.target_blank eq 'true'}>target="_blank"<{/if}>><{$item.title}></a></div>
+    <{else}>
+    <div><a href="<{link app=$item.app ctl=$item.ctl act=$item.act args=$item.params full=1 }>"  <{if $item.target_blank eq 'true'}>target="_blank"<{/if}>><{$item.title}></a></div>
+    <{/if}>
+  <{elseif $key==$setting.max_leng && $setting.max_leng}>
+    <{assign var="page" value="true"}>
+    <li class="wgt-menu-more" id="<{$widgets_id}>_menu_base"><a class="wgt-menu-view-more" href="javascript:void(0);"><{$setting.showinfo}></a>
+    <div class="v-m-page" style="display:none;position:absolute; top:25px; left:0;" id="<{$widgets_id}>_showMore">
+    <{if $item.custom_url neq ''}>
+    <div><a href="<{$item.custom_url}>" <{if $item.target_blank eq 'true'}>target="_blank"<{/if}>><{$item.title}></a></div>
+    <{else}>
+    <div><a href="<{link app=$item.app ctl=$item.ctl act=$item.act args=$item.params full=1 }>" <{if $item.target_blank eq 'true'}>target="_blank"<{/if}>><{$item.title}></a></div>
+    <{/if}>
+  <{else}>
+    <{if $item.custom_url neq ''}>
+    <li><a <{if $smarty.foreach.menu.last}>class="last"<{/if}> href="<{$item.custom_url}>" <{if $item.target_blank eq 'true'}>target="_blank"<{/if}>><{$item.title}></a></li>
+    <{else}>
+    <li><a href="<{link app=$item.app ctl=$item.ctl act=$item.act args=$item.params full=1 }>" <{if $item.target_blank eq 'true'}>target="_blank"<{/if}>><{$item.title}></a></li>
+    <{/if}>
+  <{/if}>
+<{/foreach}>
+<{if $page=="true"}>
+</div>
+</li>
+<{/if}>
+</ul>
+
+<script>
+window.addEvent('domready',function(){
+	var hrf=location.href.split('/').getLast(), n=hrf.lastIndexOf('-'),
+		menulist=$$('.MenuList_<{$widgets_id}> li');
+
+	if(n>-1)hrf=hrf.substring(0,n);
+	if(!hrf.trim().length) hrf='index.html';
+
+	var reg=new RegExp('\/'+hrf,'i');
+	menulist.each(function(el){
+		var link=el.getElement('a');
+		if(link&&link.href.test(reg))
+		el.addClass('<{$setting.className}>');
+
+	});
+
+    var showMore = $('<{$widgets_id}>_showMore');
+    if(showMore){
+        var menuBase = $('<{$widgets_id}>_menu_base');
+        document.addEvent('click',function(e){
+            if(e.target != menuBase && e.target != menuBase.getElement('a')){
+                showMore.style.display='none';
+            }else{
+                if(showMore.style.display=='none'){
+                    showMore.style.display='';
+                }else{
+                    showMore.style.display='none';
+                }
+            };
+        });
+    }
+});
+
+</script>

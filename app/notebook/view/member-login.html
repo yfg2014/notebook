@@ -1,0 +1,52 @@
+<form  action="<{$callback}>" method="post" id='loginBar'>
+  <div class="loginbox">
+      <ul>
+        <li>
+          <label class="leftlabel"><i>*</i><{t}>用户名：<{/t}></label>
+          <div class="floatdiv">
+      <{input name="uname" vtype="required" class="inputstyle" id="uname" tabindex="1" value="{$loginName}"}>
+      &nbsp;&nbsp;<a href="<{$singup_url}>"><{t}>立即注册<{/t}></a></div>
+        </li>
+        <li>
+          <label class="leftlabel"><i>*</i><{t}>密码：<{/t}></label>
+          <div class="floatdiv">
+      <{input name="password" type="password" class="inputstyle" vtype="required" id="password" tabindex="2"}>
+        </li>
+        <{if $show_varycode}>
+        <li>
+          <label class="leftlabel"><i>*</i><{t}>验证码：<{/t}></label>
+          <div class="floatdiv">
+      <span id='verifyCodebox'>
+      <{input  vtype="required&&number" size="4" maxlength="4" name="verifycode" id="iptlogin"  tabindex="3"}>
+      <span class='verifyCode' style="display:none">
+      <img id="membervocde" src="#" border="1" />
+      <a href="javascript:changeimg('membervocde')">&nbsp;
+      <{t}>看不清楚?换个图片<{/t}></a> </span> </span></div>
+        </li>
+        <{/if}>
+        <li>
+          <label class="leftlabel"></label>
+          <div class="floatdiv">
+            <input class="actbtn btn-login" type="submit" value="<{t}>登录<{/t}>" tabindex="4" />
+            <input type="hidden" name="forward" value="<{$forward}>">
+          </div>
+        </li>
+      </ul>
+
+  </div>
+</form>
+<{if $show_varycode}>
+<script>
+
+$$('#loginBar input').addEvent('focus',function(){
+      if($(this.form).retrieve('showvcode',false))return;
+      changeimg('membervocde');
+      $('verifyCodebox').getElements('span').show();
+      $(this.form).store('showvcode',true);
+});
+
+function changeimg(id){
+    $(id).set('src','<{link app="notebook" ctl="site_passport" act="gen_vcode"}>#'+$time());
+}
+</script>
+<{/if}>

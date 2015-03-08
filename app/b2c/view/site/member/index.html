@@ -1,0 +1,245 @@
+<!-- right-->
+<div class="member-main">
+<div class="orderlist-warp">
+<div class="member-main-bg clearfix">
+  <div class="title" ><{t}>您好<{/t}>，<span class="font-orange"><{if $member.name==''}><{$member.uname}><{else}><{$member.name}><{/if}> </span><{if $member.sex=='male'}>&nbsp;<{t}>先生<{/t}><{elseif $member.sex=='female'}>&nbsp;<{t}>女士<{/t}><{/if}>,<{t}>欢迎进入会员中心<{/t}></div>
+ 	  <div class="member-main-left">
+          <ul>
+            <li style="border-top:none"><{t}>您目前是：<{/t}><span class="price-normal">[<{$member.levelname}>]</span><{if $switch_lv.switch_type == 0 && $switch_lv.show eq 'YES'}>（<{t}>积分累积到<{/t}><{$switch_lv.lv_data}><{t}>可成为<{/t}><{$switch_lv.lv_name}>）<{/if}></li>
+            <li class="li-height"><{t}>经验值是：<{/t}><span class="point"><{$member.experience}></span><{if $switch_lv.switch_type == 1 && $switch_lv.show eq 'YES'}>（<{t}>经验值累积到<{/t}><{$switch_lv.lv_data}><{t}>可成为<{/t}><{$switch_lv.lv_name}>）<{/if}></li>
+			<{if $point_usaged == 'true'}>
+            <li class="li-height textright">
+              <span class="fl"><{t}>目前账户总积分：<{/t}><em class="point" ><{$member.point}></em>分</span>
+              <{if $extend_point_html}>
+              <{$extend_point_html}>分
+              <{/if}>
+              <a class="link" href="<{link app=b2c ctl='site_member'  full='1' act='point_history'}>"><{t}>查看积分历史>><{/t}></a>
+            </li>
+			<{/if}>
+			<{if $deposit_status == 'true'}>
+            <li style="border:none; clear:both" class="li-height textright">
+              <span class="fl"><{t}>预存款余额：<{/t}><em class="point"><{$member.advance.total-$member.advance.freeze|cur_odr}></em></span>
+              <a class="link" href="<{link app=b2c ctl='site_member'  full='1' act='deposit'}>"><!-- <span class="font-red"><{$def_cur_sign}></span> --><{t}>去充值>><{/t}></a>
+            </li>
+			<{/if}>
+          </ul>
+        </div>
+
+	  <div class="member-main-right" >
+          <h4 class="head">
+            <div><{t}>促销活动<{/t}></div>
+          </h4>
+          <div id="sale-active" class="Auto_Widget">
+           <div class="switchable-content">
+              <{foreach from=$wel item="wel" key=key name=wel}>
+                <p><{$wel.name}></p>
+              <{/foreach}>
+           </div>
+           </div>
+        </div>
+</div>
+<{if !$orders}>
+<div style="clear:both; margin-top:5px">
+  <div class="title title-bg" style="padding:0">
+    <div><span style="float:left"><{t}>最近订单<{/t}></span></div>
+  </div>
+  <div class="favorites">
+    <div class="noinfo"><{t}>暂无订单<{/t}></div>
+  </div>
+</div>
+<{else}>
+<div class="title-bg clearfix">
+ <span class="flt pl10"><{t}>最近订单<{/t}></span> <span class="frt p3" ><a  class="btn-a fontnormal" href="<{link app=b2c ctl=site_member act=orders}>"><span><{t}>所有订单<{/t}>>></span></a></span>
+</div>
+<table class="gridlist border-all" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th class="first"><{t}>商品名称<{/t}></th>
+    <th><{t}>订单号<{/t}></th>
+    <th><{t}>下单日期<{/t}></th>
+    <th><{t}>总金额<{/t}></th>
+    <th><{t}>订单状态<{/t}></th>
+    <th><{t}>操作<{/t}></th>
+  </tr>
+
+
+  <{foreach from=$orders item="order" name=orders key="key"}>
+    <tr
+  <{if ($key+1)%2 == 0}>class="order-list-tr"<{/if}>>
+
+    <td width="33%"><{if $order.goods_items}>
+      <{foreach from=$order.goods_items item=item_goods name=goods_item}> <div <{if end($order.goods_items)!=$item_goods}> class="member-order-list" <{/if}>> 
+       <{if $item_goods.product.goods_id>0}>
+       <a target="_blank" class="font-blue" href="<{link app=b2c ctl="site_product" act="index" arg0=$item_goods.product.goods_id}>">
+       <{/if}>
+       <{$item_goods.product.name}> <{if $item_goods.product.goods_id>0}></a><{/if}><br/><span><{if $item_goods.product.attr}><{$item_goods.product.attr}><{/if}></span>
+    </div>
+
+  <{/foreach}>
+  <{/if}>
+  <{if $order.gift_items}>
+  <{foreach from=$order.gift_items item=item_gift name=gift_item}>
+    <div
+  <{if end($order.gift_items)!=$item_gift}> class="member-order-list" <{/if}>> <a target="_blank" href="<{$item_gift.link_url}>"> <{$item_gift.name}><{if $item_gift.attr}>(<{$item_gift.attr}>)<{/if}> </a>
+    </div>
+
+  <{/foreach}>
+  <{/if}>
+  <{if $order.extends_items}>
+  <{foreach from=$order.extends_items item=item_extends name=item_extends}>
+    <{$item_extends}>
+  <{/foreach}>
+  <{/if}>
+    </td>
+    <td class="order-link"><{$order.order_id}></td>
+    <td><{$order.createtime|cdate:FDATE_STIME}></td>
+    <td  class="point textcenter"><{$order.cur_amount|cur_odr:$order.currency:false:true}></td>
+    <td class="textcenter"><span> <{if $order.status == 'finish'}><{t}>已完成<{/t}>
+      <{elseif $order.status == 'dead'}><{t}>已作废<{/t}>
+      <{else}>
+      <{if $order.pay_status==1}><{t}>已付款<{/t}>
+      [<{if $order.ship_status==1}>
+      <{t}>已发货<{/t}>
+      <{elseif $order.ship_status==2}>
+      <{t}>部分发货<{/t}>
+      <{elseif $order.ship_status==3}>
+      <{t}>部分退货<{/t}>
+      <{elseif $order.ship_status==4}>
+      <{t}>已退货<{/t}>
+      <{else}>
+      <{t}>正在备货...<{/t}>
+      <{/if}>]
+      <{elseif $order.pay_status==2}>
+      <{t}>已付款至担保方<{/t}>
+      <{elseif $order.pay_status==3}> <a href="<{link app=b2c ctl=site_member act=orderPayments arg0=$order.order_id}>" ><{t}>等待补款<{/t}></a> <{if $order.ship_status==1}>
+      <{t}>[已发货]<{/t}>
+      <{elseif $order.ship_status==2}>
+      <{t}>[部分发货]<{/t}>
+      <{elseif $order.ship_status==3}>
+      <{t}>[部分退货]<{/t}>
+      <{elseif $order.ship_status==4}>
+      <{t}>[已退货]<{/t}>
+      <{/if}>
+      <{elseif $order.pay_status==4}>
+      <{t}>部分退款<{/t}>
+      [<{if $order.ship_status==1}>
+      <{t}>已发货<{/t}>
+      <{elseif $order.ship_status==2}>
+      <{t}>部分发货<{/t}>
+	  <{elseif $order.ship_status==3}>
+      <{t}>部分退货<{/t}>
+      <{elseif $order.ship_status==4}>
+      <{t}>已退货<{/t}>
+      <{elseif $order.ship_status==0}>
+      <{t}>未发货<{/t}>
+      <{/if}>]
+      <{elseif $order.pay_status==5}>
+      <{t}>已退款<{/t}>
+      [<{if $order.ship_status==1}>
+      <{t}>已发货<{/t}>
+      <{elseif $order.ship_status==2}>
+      <{t}>部分发货<{/t}>
+	  <{elseif $order.ship_status==3}>
+      <{t}>部分退货<{/t}>
+      <{elseif $order.ship_status==4}>
+      <{t}>已退货<{/t}>
+      <{elseif $order.ship_status==0}>
+      <{t}>未发货<{/t}>
+      <{/if}>]
+      <{else}> <{if $order.payinfo.pay_app_id != '-1'}><a href="<{link app=b2c ctl=site_member act=orderPayments arg0=$order.order_id}>" ><{/if}><{t}>等待付款<{/t}><{if $order.payinfo.pay_app_id != '-1'}></a><{/if}> <{if $order.ship_status==1}>
+      <{t}>[已发货]<{/t}>
+      <{elseif $order.ship_status==2}>
+      <{t}>[部分发货]<{/t}>
+      <{elseif $order.ship_status==3}>
+      <{t}>[部分退货]<{/t}>
+      <{elseif $order.ship_status==4}>
+      <{t}>[已退货]<{/t}>
+      <{/if}>
+      <{/if}>
+      <{/if}> </span></td>
+    <td><{if $order.status == 'active' && ($order.pay_status=='0' || $order.pay_status=='3')}><{if $order.payinfo.pay_app_id != '-1'}><a href="<{link app=b2c ctl="site_member" act="orderPayments" arg0=$order.order_id}>" class="btn-bj-hover operate-btn"><{t}>去付款<{/t}></a>
+          <{/if}><{/if}><a href="<{link app=b2c ctl="site_member" act="orderdetail" arg0=$order.order_id}>" class="btn-bj-hover operate-btn"><{t}>查看订单<{/t}></a></td>
+  </tr>
+  <{/foreach}>
+</table>
+<{/if}> <br />
+<div>
+  <div class="title-bg">
+   <span class="flt pl10"><{t}>最近收藏<{/t}></span><span class="frt pt3 pr3"><a class="fontnormal btn-a " href="<{link app=b2c ctl=site_member act=favorite}>"><span><{t}>所有收藏<{/t}>>></span></a></span>
+  </div>
+  <div class="favorites"> <{if !$favorite}>
+    <div class="noinfo"><{t}>暂无收藏<{/t}></div>
+    <{/if}>
+    <ul>
+      <{foreach from=$favorite item="favorite" name=favorite}>
+      <{if $smarty.foreach.favorite.iteration<=5}>
+      <li >
+          <div class="goodpic"> <a href="<{link app=b2c ctl=site_product act=index arg0=$favorite.goods_id}>"><img style="width:116px; height:120px;overflow:hidden;" src="<{if $favorite.udfimg == 'true'}><{$favorite.thumbnail_pic|default:$defaultImage|storager:'s'}><{else}><{$favorite.image_default_id|default:$defaultImage|storager:'s'}><{/if}>" /></a></div>
+          <div class="goods-main">
+          <div class="goodinfo">
+            <h3><a href="<{link app=b2c ctl=site_product act=index arg0=$favorite.goods_id}>"><{$favorite.name}></a></h3>
+          </div>
+          <div class="price-wrap"><span class="font-red font14px fontbold"><{$favorite.price|cur_odr}></span></div>
+          </div>
+      </li>
+      <{/if}>
+      <{/foreach}>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- right-->
+<script>
+/*小图mouseenter效果*/
+window.addEvent('domready',function(){
+
+  var cart_product_img_viewer=new Element('div',{styles:{'position':'absolute','zIndex':500,'opacity':0,'border':'1px #666 solid'}}).inject(document.body);
+
+  var cpiv_show=function(img,event){
+
+      if(!img)return;
+      cart_product_img_viewer.empty().adopt($(img).clone().removeProperties('width','height').setStyle('border','1px #fff solid')).fade(1);
+
+      var size = window.getSize(), scroll = window.getScroll();
+        var tip = {x: cart_product_img_viewer.offsetWidth, y: cart_product_img_viewer.offsetHeight};
+        var props = {x: 'left', y: 'top'};
+        for (var z in props){
+            var pos = event.page[z] + 10;
+            if ((pos + tip[z] - scroll[z]) > size[z]) pos = event.page[z] - 10 - tip[z];
+            cart_product_img_viewer.setStyle(props[z], pos);
+        }
+
+  };
+
+   $$('.gridlist .product-list-img').each(function(i){
+
+       new Asset.image(i.get('isrc'),{onload:function(img){
+       if(!img)return;
+           var _img=img.zoomImg(50,50);
+             if(!_img)return;
+           _img.setStyle('cursor','pointer').addEvents({
+              'mouseenter':function(e){
+                 cpiv_show(_img,e);
+              },
+              'mouseleave':function(e){
+                cart_product_img_viewer.fade(0);
+              }
+           });
+           i.empty().adopt(new Element('a',{href:i.get('ghref'),target:'_blank',styles:{border:0}}).adopt(_img));
+       },onerror:function(){
+            i.empty();
+
+       }});
+
+   });
+
+});
+ var sale = new Switchable('sale-active',{
+  'autoplay':true,
+  'effect':'scrolly',
+  'duration':500,
+  'interval':4000,
+  'hasTriggers':false
+ })
+</script>

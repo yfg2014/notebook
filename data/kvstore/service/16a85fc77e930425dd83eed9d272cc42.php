@@ -1,0 +1,1 @@
+<?php exit(); ?>a:3:{s:5:"value";a:1:{s:4:"list";a:3:{s:32:"b2c_desktop_widgets_exstatistics";s:32:"b2c_desktop_widgets_exstatistics";s:25:"b2c_desktop_widgets_stats";s:25:"b2c_desktop_widgets_stats";s:29:"b2c_desktop_widgets_workcount";s:29:"b2c_desktop_widgets_workcount";}}s:3:"ttl";i:0;s:8:"dateline";i:1376705511;}

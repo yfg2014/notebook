@@ -1,0 +1,1 @@
+<?php exit(); ?>a:3:{s:5:"value";a:1:{s:4:"list";a:3:{s:23:"gift_order_service_gift";s:23:"gift_order_service_gift";s:25:"b2c_order_service_adjunct";s:25:"b2c_order_service_adjunct";s:23:"b2c_order_service_goods";s:23:"b2c_order_service_goods";}}s:3:"ttl";i:0;s:8:"dateline";i:1376705580;}

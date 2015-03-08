@@ -1,0 +1,61 @@
+/* Jxwinter FrameWork */
+body{font-size:12px;}
+h1,h2,h3,h4,h5,h6{margin:0}
+.fl{float:left}
+.fr{float:right}
+.pr{position:relative}
+.pa{position:absolute}
+.w700{width:700px}
+.w250{width:250px}
+.w960{width:960px;margin:0 auto;}
+.btm10{margin-bottom:10px}
+a:hover{text-decoration:none;}
+h6 a:hover{color:#ff0000;}
+
+
+.main{margin-bottom:40px;}
+.goods950{margin-bottom:20px;}
+/* header and header widgets's css */
+.top-bar{height:29px;line-height:29px;border-bottom:1px solid #bdbdbd;background:#ededed}
+.login,.logo,.nav{left:0;top:0;}
+.top-menu,.search{right:0;top:0}
+.top-menu{_width:300px;text-align:right;}
+.logo-bar{height:84px;}
+
+.nav-bar{height:40px;line-height:40px;background:#000}
+.nav{left:10px;}
+.hot-menu{right:10px;top:8px;_width:320px;}
+.nav li{line-height:40px;float:left;}
+.nav li a{color:#ffffff;font-size:16px;padding:0 15px}
+.hot-menu a{height:23px;display:block;line-height:23px;font-size:14px;font-weight:bolder;background:#ffffff;padding:0 12px;float:left;border-right:1px solid #000 }
+.hot-menu a:hover{background:#ff0000;color:#ffffff;}
+
+.notice-bar{height:33px;background:#ededed;}
+.notice1,.cart{height:21px;line-height:21px;top:6px;}
+.notice-con span{background:url(notice-bg.gif) no-repeat left center;padding-left:20px;}
+.notice1{left:15px}
+.cart{right:10px;background:#ffffff;border:1px solid #bdbdbd;width:158px;padding-left:20px;}
+
+/*  index   */
+.article-right{border:1px solid #ececec;}
+.article-right .TreeListTitle{height:30px;line-height:30px;border-bottom:1px solid #ececec;margin-bottom:5px; text-indent:15px;}
+.article-right .cat1{height:25px;line-height:25px;text-indent:25px;}
+
+.cat-ad img{border:1px solid #ececec}
+
+
+/* footer  */
+.bottom-help{border:1px solid #ececec;padding:10px;}
+.help-list .help{float:left;width:180px;}
+.help-list .TreeListTitle{padding-left:25px;height:30px;line-height:30px;}
+.help-list .TreeListTitle a{font-weight:bolder}
+.help-list .cat1{height:24px;line-height:24px;padding-left:25px;}
+
+.footer-tel{width:200px;line-height:22px;color:#585858}
+.footer-tel span{color:#ED1C24;font-size:20px;font-family:Verdana;line-height:40px;margin-bottom:10px;}
+.footer-menu{height:30px; line-height:30px; background:#ececec;text-align:center}
+.footer-menu li{display:inline;}
+.footer-menu li a{padding:0 14px;color:#888888}
+
+/*  bug fix  */
+.hotmenu{height:23px;overflow:hidden;}

@@ -1,0 +1,39 @@
+<ul class="goods-info-list">
+    <li><{if $goodsbndisplay eq 'true'}><span><{t}>商品编号：<{/t}></span><em><{$goods.bn}></em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <{/if}> <span><{t}>商品货号：<{/t}></span><em id="goodsBn" updatespec="text_bn"><{assign var=apro value=$goods.product|current}><{$apro.bn}><{assign var=apro value=null}></em></li>
+    <li style="display:none">
+    <span><em class='font-red font24px fix-price'>
+    <{if $goods.minprice && $goods.maxprice}>
+    <{$goods.minprice|cur_odr}>&nbsp;-&nbsp;<{$goods.maxprice|cur_odr:$order.currency}>
+    <{else}>
+    <{$goods.price|cur_odr}>
+    <{/if}>
+    </em></span>
+    </li>
+    <{if $env.conf.b2c.site.show_mark_price != 'false'}>
+    <li class="list-item"><span><{t}>市 场 价：</span><{/t}>
+    <del class="mktprice1"><em updatespec="mktprice"><{if $goods.minmktprice && $goods.maxmktprice}>
+    <{$goods.minmktprice|cur_odr}>&nbsp;-&nbsp;<{$goods.maxmktprice|cur_odr}>
+    <{else}>
+    <{$goods.mktprice|cur_odr}>
+    <{/if}></em></del></li>
+    <{/if}>
+    <li class="list-item"><span><{t}>现　　价：<{/t}></span> <em class="goodsprice" updatespec="updateprice"><{if $goods.minprice && $goods.maxprice}>
+    <{$goods.minprice|cur_odr}>&nbsp;-&nbsp;<{$goods.maxprice|cur_odr:$order.currency}>
+    <{else}>
+    <{$goods.current_price|cur_odr}>
+    <{/if}></em>
+    <{if $goods.mktprice >= $goods.price && $goods.setting.mktprice && $goods.setting.saveprice > 0}>
+    <{if $goods.setting.saveprice == 1}> &nbsp;&nbsp;&nbsp; <span class="discount"><{t}>节省了<{/t}><em updatespec="discountprice"><{$goods.mktprice-$goods.current_price|cur}></em></span>
+    <{elseif $goods.setting.saveprice == 2}><span><{t}>优惠:<{/t}></span><em class="discount"><{$goods.current_price/$goods.mktprice*100|number:'2'}>%</em>
+    <{elseif $goods.setting.saveprice == 3}><span><{t}>折扣:<{/t}></span><em class="discount"><{$goods.current_price/$goods.mktprice*10|number:'1'}><{t}>折<{/t}></em>
+    <{/if}>
+    </li>
+    <{/if}>
+    <{if $env.conf.b2c.site.member_price_display != 2}>
+    <{$goodshtml.mlv_price}>
+    <{/if}>
+    <{if $goods.setting.score == '3'&& $goods.gain_score}><li><span><{t}>所得积分：<{/t}></span><em id="goodsScore"><{$goods.gain_score}></em></li><{/if}>
+</ul>
+<script type="text/javascript">
+//new AutoSize('.goods-info-list .list-item');
+</script>

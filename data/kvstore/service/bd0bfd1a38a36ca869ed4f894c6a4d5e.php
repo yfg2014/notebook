@@ -1,0 +1,1 @@
+<?php exit(); ?>a:3:{s:5:"value";a:1:{s:4:"list";a:1:{s:36:"pointprofessional_order_total_change";s:36:"pointprofessional_order_total_change";}}s:3:"ttl";i:0;s:8:"dateline";i:1376705656;}

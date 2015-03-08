@@ -1,0 +1,3 @@
+<{if $goods.nostore_sell || count($goods.products)>0 || $goods.store-$goods.product_freez>0 || $goods.store==='' || $goods.store===null }>
+<input class="actbtn btn-buy updateBtn" value="<{t}>加入购物车<{/t}>" type="submit" />
+<{/if}>

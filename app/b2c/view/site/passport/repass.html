@@ -1,0 +1,40 @@
+<div class="register-wrap clearfix">
+      <h4><{t}>密码重设<{/t}></h4>
+     <div class="intro"><{t}>设置您的新密码<{/t}></div>
+    <div class="form">
+
+       <form name="FORM_TPL_FORGETQUESTION" method="post" action=<{link ctl="passport" act="dorepass"}>>
+     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:20px;">
+           <tr>
+            <th><{t}>密码：<{/t}></th>
+            <td><input type=password name=password class="inputstyle" ></td>
+          </tr>
+          <tr>
+            <th><{t}>确认密码：<{/t}></th>
+            <td><input type=password input name=repassword class="inputstyle" ></td>
+          </tr>
+          <input type=hidden name=secret value=<{$secret}>>
+
+          <tr>
+            <th>&nbsp;</th>
+            <td><input  type="submit" class="buttonstyle" value="<{t}>提 交<{/t}>" /></td>
+          </tr>
+        </table>
+
+    </div>
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

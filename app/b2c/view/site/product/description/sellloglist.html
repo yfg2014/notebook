@@ -1,0 +1,31 @@
+<div class="commentTabLeft floatLeft"><strong><{t}>销售记录<{/t}></strong></div>
+<div style="clear:both;"></div>
+<div class="body">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="liststyle">
+    <col class="span-5">
+    <col class="span-3">
+    <col >
+    <col class="span-3">
+    <thead>
+        <tr>
+            <th><{t}>买家<{/t}></th>
+            <th><{t}>购买价<{/t}></th>
+            <th><{t}>购买数量<{/t}></th>
+            <th><{t}>购买时间<{/t}></th>
+        </tr>
+        </thead>
+        <tbody>
+        <{foreach from=$sellLogList.data item=sellLogListData key=key}>
+        <tr>
+            <td><{$sellLogListData.name|cut:3:''}>***</td>
+            <td><{$sellLogListData.price|cur_odr}></td>
+            <td><{$sellLogListData.number}>  <{if $sellLogListData.pdt_desc}><span class="fontcolorGray">( <{$sellLogListData.pdt_desc}> )</span><{/if}></td>
+            <td><{$sellLogListData.createtime|userdate}></td>
+        </tr>
+        <{/foreach}>
+
+
+        </tbody>
+    </table>
+<div class="tips"><{t}>截至今日， 累计成交<{/t}><span class="font14px fontbold fontcolorOrange"><{$sellLogList.total}></span><{t}>笔<{/t}><{if $sellLogList.total > $sellLogList.data|@count}><a href="<{link app=b2c ctl=site_product act=selllog arg0=$goods.goods_id}>" target="_blank"><{t}>，查看更多...<{/t}></a><{/if}></div>
+</div>

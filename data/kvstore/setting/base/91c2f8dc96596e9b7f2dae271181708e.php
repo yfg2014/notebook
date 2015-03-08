@@ -1,0 +1,1 @@
+<?php exit(); ?>a:3:{s:5:"value";a:3:{s:9:"exclusion";s:4:"true";s:5:"value";s:4:"true";s:6:"app_id";s:3:"b2c";}s:3:"ttl";i:0;s:8:"dateline";i:1376705493;}

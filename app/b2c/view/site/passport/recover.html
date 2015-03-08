@@ -1,0 +1,49 @@
+<div class="register-wrap clearfix">
+      <h4><{t}>取回密码第二步：邮箱确认<{/t}></h4>
+     <p class="intro"><{t}>说明：当你填写邮箱并提交后，密码会自动发到您注册的邮箱里面，请及时收邮件，取回密码！<{/t}></p>
+    <div class="form password-return">
+
+       <form name="FORM_TPL_FORGETQUESTION" method="post" action=<{link app=b2c ctl="site_passport" act="sendPSW"}>>
+
+          <ul>
+		  <li>
+            <label><{t}>您的用户名：<{/t}></label>
+            <{$data.login_name}><input type=hidden name=uname value="<{$data.login_name}>" />
+          </li>
+          <{if $data.account.pw_question}>
+          <li>
+            <label><{t}>取回密码问题：<{/t}></label>
+            <{$data.account.pw_question}>
+          </li>
+          <li>
+			 <label><{t}>取回密码答案：<{/t}></label>
+			 <{input name=pw_answer class="inputstyle" }>
+          </li>
+          <{/if}>
+			<li>
+				<label><{t}>请输入您的邮箱：<{/t}></label>
+				<{input name=email vtype="email" class="inputstyle" }>
+			</li>
+
+            <li class="button-li">
+				<{button type="submit"  class="common-btn" rel="_request" label=$___b2c="提交"|t:'b2c'}>
+			</li>
+          </ul>
+		</form>
+    </div>
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

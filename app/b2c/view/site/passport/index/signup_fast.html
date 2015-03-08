@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title><{t}>用户注册<{/t}></title>
+    <{lang_script src="lang.js" app="site"}>
+    <{css src="framework.css" app="site" pdir="css_mini"}>
+    <{css src="b2c.css" app="b2c" pdir="css_mini"}>
+    <{css src="passport.css" app="b2c" pdir="css_mini"}>
+    <{if defined("DEBUG_JS") && DEBUG_JS}>
+    <{script src="mootools.js" app="site"}>
+    <{script src="formplus.js" app="site"}>
+    <{script src="jstools.js" app="site"}>
+    <{script src="shoptools.js" app="b2c"}>
+    <{script src="lab.js" app="site"}>
+    <{script src="coms/datapicker.js" app="site"}>
+    <{else}>
+    <{script src="moo_min.js" app="site" pdir="js_mini"}>
+    <{script src="tools_min.js" app="site" pdir="js_mini"}>
+    <{script src="shoptools_min.js" app="b2c" pdir="js_mini"}>
+    <{script src="regui.js" app="site" pdir="js_mini"}>
+    <{/if}>
+    <{lang_script src="lang.js" app="b2c"}>
+    <{lang_css src="lang.css" app="b2c"}>
+    <style>
+      .error{padding:2px 5px;}
+      /* .notice-inline{position:absolute;} */
+    </style>
+  </head>
+  <body style="font-family: Tahoma, Arial, Helvetica, sans-serif;font-size: 12px;color: #666666;margin:0;">
+    <div class="gray" style="padding-bottom:8px;color:gray;"><{t}>欢迎来到我们网站，如果您是新用户，请填写下面的表单进行注册<{/t}></div>
+    <form method="post" action="<{link app=b2c ctl='site_passport' act='create' args01=$next_url}>?mini=1" class="signupform">
+      <input name="forward" type="hidden" value="<{$options.url}>">
+      <div class="intro">
+        <div class="customMessages">
+          <!--register_message-->
+        </div>
+      </div>
+      <div class="loginbox" style="margin:0;padding:5px 0;">
+        <ul>
+          <li>
+          <label class="login-k"><i>*</i><{t}>用户名：<{/t}></label>
+          <div class="login-v"><{input type="text" name="pam_account[login_name]" class="inputstyle" vtype="required"  id="reg_user" maxlength="50" onchange="nameCheck(this);"}><span></span></div>
+          </li>
+          <li>
+          <label class="login-k"><i>*</i><{t}>密码：<{/t}></label>
+          <div class="login-v"><{input name="pam_account[login_password]" class="inputstyle" type="password" vtype="required" id="reg_passwd"}></div>
+          </li>
+          <li>
+          <label class="login-k"><i>*</i><{t}>确认密码：<{/t}></label>
+          <div class="login-v"><{input name="pam_account[psw_confirm]" type="password" class="inputstyle" vtype="required&&change_password" id="reg_passwd_r"}></div>
+          </li>
+          <li>
+          <label class="login-k"><i>*</i><{t}>电子邮箱：<{/t}></label>
+          <div class="login-v"><{input vtype="required&amp;&amp;email" name="contact[email]" id="reg_email" class="inputstyle" placeholder="yourname@xx.com" onchange="emailCheck(this);"}></div>
+          </li>
+          <{foreach from=$attr item=item name="item" key='row'}>
+          <li>
+          <label class="login-k"><{if $item.attr_required eq 'true'}><i>*</i><{/if}><{$item.attr_name}>：</label>
+          <div class="login-v">
+            <{if $item.attr_type =='date'}>
+            <{if $item.attr_value != '0-0-0'}>
+            <{if $item.attr_required eq 'true'}>
+            <{input class="inputstyle" type='date' vtype="required&&date" name=$item.attr_column value=$item.attr_value}>
+            <{else}>
+            <{input class="inputstyle" type='date' name=$item.attr_column value=$item.attr_value}>
+            <{/if}>
+            <{else}>
+            <{if $item.attr_required eq 'true'}>
+            <{input type="date" vtype="required&&date" name=$item.attr_column}>
+            <{else}>
+            <{input class="cal" vtype="date" name=$item.attr_column}>
+            <{/if}>
+            <{/if}>
+            <{/if}>
+
+            <{if $item.attr_type =='region'}>
+            <{if $item.attr_required eq 'true'}><input type="hidden" name="area_required" value="1"><{/if}>
+            <{input app=ectools type="region" name=$item.attr_column value=$item.attr_value vtype="area"}>
+            <{/if}>
+
+            <{if $item.attr_type =='gender'}>
+            <{input type='gender' name=$item.attr_column value=$item.attr_value }>
+            <{/if}>
+
+            <{if $item.attr_type =='select'}>
+            <select name="<{$item.attr_column}>" <{if $item.attr_required eq 'true'}>vtype="required"<{/if}>> <option value="" <{if $item.attr_value == ''}>selected="true"<{/if}>><{t}>请选择<{/t}></option>
+              <{foreach from=$item.attr_option item=option name="option"}>
+              <option value="<{$option}>" <{if $item.attr_value == $option}>selected="true"<{/if}>><{$option}></option>
+              <{/foreach}>
+            </select>
+            <{/if}>
+
+            <{if $item.attr_type =='checkbox'}>
+            <{foreach from=$item.attr_option item=checkbox name="checkbox" }>
+            <input type='checkbox' name="box:<{$item.attr_column}>[]" value="<{$checkbox}>" <{foreach from=$item.attr_value item=checkboxvalue name="checkboxvalue" }>
+            <{if $checkboxvalue==$checkbox}>checked="true"<{/if}>
+            <{/foreach}>>
+            <label><{$checkbox}></label>
+            <br/>
+            <{/foreach}>
+            <input type="hidden" name="<{$item.attr_column}>[]" value="%no%">
+            <{if $item.attr_required eq 'true'}>
+            <input type="hidden" vtype="selectc" />
+            <{/if}>
+            <{/if}>
+
+
+            <{if $item.attr_type == 'text'}>
+            <input type="text" class="inputstyle" name="<{$item.attr_column}>" value="<{$item.attr_value}>" vtype="<{if $item.attr_required eq 'true'}>required&&<{/if}><{$item.attr_valtype}>" />
+            <{/if}>
+
+            <{if $item.attr_type == 'number'}>
+            <input type='text' class="inputstyle" name="<{$item.attr_column}>" value="<{$item.attr_value}>" vtype="<{if $item.attr_required eq 'true'}>required&&<{/if}><{$item.attr_valtype}>" />
+            <{/if}>
+
+            <{if $item.attr_type == 'alpha'}>
+            <input type='text' class="inputstyle" name="<{$item.attr_column}>" value="<{$item.attr_value}>" vtype="<{if $item.attr_required eq 'true'}>required&&<{/if}><{$item.attr_valtype}>" />
+            <{/if}>
+          </div>
+          </li>
+          <{/foreach}>
+
+          <{if $env.conf.b2c.site.register_valide eq 'true'}>
+          <li>
+          <label class="login-k"><i>*</i><{t}>验证码：<{/t}></label>
+          <div class="login-v"><{input vtype="number&&required" size="4" maxlength="4" class="x-input" name="signupverifycode" id="iptsingup"}> <span class='verifyCode' style='display:none;'><img src="#" codesrc='<{link app=b2c ctl="site_passport" act="verifyCode" arg0="s"}>' align="absmiddle" /><a href="javascript:void(0)">&nbsp;<{t}>看不清楚?换个图片<{/t}></a> </span></div>
+          </li>
+          <{/if}>
+          <li>
+          <label class="login-k"></label>
+          <div class="login-v"><{input type="checkbox" id="license" name="license" value="agree" checked="checked"}> <{t}>我已阅读并同意 <{/t}><a href="<{link app='content' ctl=site_article act=index arg0=36}>" id="terms_error" class="lnk" target='_blank'><span class="FormText" id="terms_error_sym"><{t}>会员注册协议<{/t}></span></a><{t}>和<{/t}><a href="<{link app='content' ctl=site_article act=index arg0=35}>" id="privacy_error" class="lnk" target='_blank'><span class="FormText" id="privacy_error_sym"><{t}>隐私保护政策<{/t}></span></a>。</div>
+          </li>
+          <li>
+          <label class="login-k"></label>
+          <div class="login-v">
+            <{button type="submit" rel="_request" class="common-btn" label=$___b2c="注册新用户"|t:'b2c'}>
+            <input type="hidden" name="forward" value="<{$forward}>" />
+          </div>
+          </li>
+        </ul>
+        <{$redirectInfo}>
+      </div>
+    </form>
+    <script>
+    <{if $env.conf.b2c.site.register_valide eq 'true'}>
+    void function(formclz){
+        var vcodeBox = document.getElement('.'+formclz+' .verifyCode');
+        var vcodeImg  =vcodeBox.getElement('img');
+        var refreshVcodeBtn  = vcodeBox.getElement('a').addEvent('click',function(e){
+            e.stop();
+            vcodeImg.src = vcodeImg.get('codesrc')+'?'+(+new Date());
+        });
+        $$('.'+formclz+' input').addEvent('focus',function(){
+            if (this.form.retrieve('showvcode',false))return;
+            vcodeBox.show();
+            refreshVcodeBtn.fireEvent('click',{stop:function(){}});
+            this.form.store('showvcode',true);
+        });
+        document.getElement('.'+formclz+'').addEvent('submit',function(e){
+            var str=$("reg_user").value.trim();
+            var len = 0;
+            for (var i = 0; i < str.length; i++) {
+                str.charCodeAt(i) > 255? len += 3:len ++;
+            }
+            if(len<3)return false;
+        });
+    }('signupform');
+    <{/if}>
+
+    $$('.signupform [type=submit]')[0].store('_ajax_config', {
+        onComplete:function(rs){
+            if (!rs) return;
+            rs=JSON.decode(rs[0]);
+            if(rs.status == 'failed') return top.Message.error(rs.msg);
+            else {
+                top.document.getElement('[data-single]').hide();
+                top.Message.success(rs.msg, function(){
+                    top.location.href=rs.url;
+                });
+            }
+        }
+    });
+
+    validatorMap['change_password']= ['<{t}>两次输入的密码不一致！<{/t}>', function(element, v) {
+        var passwd_re = $('reg_passwd');
+        var passwd = $('reg_passwd_r');
+        var _is_validate = false;
+        if (passwd_re.value == passwd.value) _is_validate = true||_is_validate;
+        return _is_validate;
+    }];
+
+    function nameCheck(input){
+        new Request.HTML({
+            url:'<{link app=b2c ctl=site_passport act=namecheck}>',
+            update:$(input).getNext(),
+            method:'post',
+            data:'name='+encodeURIComponent(input.value=input.value.trim())
+        }).send();
+    }
+
+    function emailCheck(input){
+        new Request.HTML({
+            url:'<{link app=b2c ctl=site_passport act=emailcheck}>',
+            update:$(input).getNext(),
+            method:'post',
+            data:'email='+encodeURIComponent(input.value=input.value.trim())
+        }).send();
+    }
+
+    (function(){
+        var input = $(document.body).getElements('input[name="contact[area]"]')[0];
+        if(!input)return;
+        var select = input.getNext('select');
+        select.addEvent('change',function(e){
+            if($(e.target).value !='_NULL_'){
+                input.getParent('span').set('vtype','area');
+            }
+            else{
+                input.getParent('span').set('vtype','');
+            }
+        });
+    })();
+    </script>
+    </body>
+</html>

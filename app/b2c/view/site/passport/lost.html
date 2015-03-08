@@ -1,0 +1,17 @@
+<div id="pass">
+<form method="post" action="<{link app=b2c ctl="site_passport" act="recover"}>">
+<div class="register-wrap">
+    <div class="loginbox">
+      <!-- <h4><{t}>忘记密码？<{/t}></h4> -->
+      <div class="intro"><div class="customMessages"></div></div>
+      <div>
+        <input name="forward" type="hidden" value="<{$options.url}>">
+        <ul>
+          <li class="clearfix"><label class="login-k"><i>*</i><{t}>用户名：<{/t}></label><div class="login-v"><{input class="inputstyle" name="login" vtype="required" id="recover_login" }><input type="text" style="display:none;"><span id="reg_user_info"></span></div></li>
+        <li><label class="login-k"></label><div class="login-v"><{button class="submit-btn" rel="_request" data-ajax-config="{update:'pass'}" type="submit" label=$___b2c="获取新密码"|t:'b2c'}></div></li>
+        </ul>
+     </div>
+    </div>
+  </div>
+ </form>
+</div>

@@ -1,0 +1,22 @@
+<form method="post" id="click-form" action="index.php?app=mobileshop&ctl=admin_mobileshop&act=saveurl">
+
+
+<div class="tableform">
+<h4><{t}>添加无线商城<{/t}></h4>
+<div class="division">
+<div class=" current">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr> 
+        <th><{t}>无线商城地址：<{/t}></th><td><{input name="mobileshop_url" id="mobileshop_url" style="width:360px" value=$mobileshop_url size="50"}> <{help}><{t}>注意：网页地址前需要带有http://<{/t}><{/help}></td>
+      </tr>
+    </table>
+</div>
+</div>
+
+<div class="table-action">
+         <{button type="submit" label=$___seturl="保存设置"|t:'seturl' }>
+</div>
+</div>
+
+</div>
+</form> 

@@ -1,0 +1,12 @@
+<div class="tableform">
+    <h2 class="head-title"><{t}>无线商城配置<{/t}></h2>
+    <div class="division">
+    <{if $ifseturl}>
+        <iframe width="100%" scrolling="auto" height="450" frameborder="0" name="ifm" id="ifm" marginwidth="0" marginheight="0" src="<{$mobileshop_url}>?node_id=<{$node_id}>&amp;sign=<{$sign}>&amp;type=<{$type}>&amp;shop_license=<{$shop_license}>&amp;shop_node=<{$shop_node}>&amp;shop_url=<{$shop_url}>&amp;shop_name=<{$shop_name}>"> 
+        </iframe>
+    <{else}>
+        <p class="notice"> <{t}>没有添加无线商城，请添加<{/t}> </p>
+        <{button type="button" href="index.php?app=mobileshop&ctl=admin_mobileshop&act=seturl" label=$___mobileshop="添加无线商城"|t:'mobileshop'}>
+    <{/if}>
+    </div>
+</div>

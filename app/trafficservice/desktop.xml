@@ -1,0 +1,10 @@
+<desktop>
+    <permissions>
+        <permission id="traffics" display='true' workground='b2c.wrokground.sale'>流量服务</permission>
+    </permissions>
+    <workground name="营销" id="b2c.wrokground.sale" controller="admin_sales_coupon" action="index" order="40">
+        <menugroup name="流量服务">
+            <menu controller='admin_trafficservice' action='index' permission='traffics' display='true' order='120'>流量服务</menu>
+        </menugroup>
+    </workground> 
+</desktop>
