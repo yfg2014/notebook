@@ -20,7 +20,8 @@ class notebook_ctl_site_passport extends site_controller {
         $url = $this->gen_url(array('app'=>'notebook','ctl'=>'site_passport','act'=>'member'));
         if(isset($_SESSION['username']))
             $this->splash('success',$url,app::get('notebook')->_('您已经是登陆状态，不需要重新登陆'));
-        $this->gen_login_form();
+        $this->gen_login_form(); 
+
         $this->page('member-login.html');
     }
 
@@ -44,6 +45,7 @@ class notebook_ctl_site_passport extends site_controller {
                 );
             }
         }
+        //print_r($this->pagedata['passports']);
     }
 
     //生成样验证码

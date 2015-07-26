@@ -1,0 +1,1 @@
+<?php exit(); ?>a:3:{s:5:"value";a:2:{s:11:"error_count";a:1:{s:8:"notebook";i:1;}s:10:"login_time";i:1437886746;}s:3:"ttl";i:3600;s:8:"dateline";i:1437889623;}

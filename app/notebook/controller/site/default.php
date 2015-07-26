@@ -17,7 +17,7 @@ class notebook_ctl_site_default extends site_controller{
     public function addnew(){
         //begin开启事务，设置错误或成功时返回的URL地址，设置用户自定义的错误处理函数_errorHandler
         //和 end 配合使用
-        $this->begin(array("ctl" => "site_default", "act" => "index"));
+        $this->begin(array("app"=>"notebook","ctl" => "site_default", "act" => "index"));
         //接受提交过来的参数
         $data = array(
                 'item_subject'=>$_POST['subject'],
